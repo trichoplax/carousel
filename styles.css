@@ -1,7 +1,7 @@
 body {
     text-align: center;
 }
-.pseudomargin {
+.container-pseudomargin {
     height: 7.03125vw;
     max-height: 10vh;
 }
@@ -26,6 +26,7 @@ body {
 }
 .main {
     display: inline-block;
+    position: relative;
     float: left;
     margin: 0 auto;
     width: 80vw;
@@ -35,11 +36,40 @@ body {
 }
 .carousel-image {
     position: absolute;
+    top: 0px;
     background-size: cover;
     width: 80vw;
     max-width: 113.7777777777777vh;
     height: 45vw;
     max-height: 64vh;
+}
+.arrow-buttons-top-pseudomargin {
+    width: 80vw;
+    max-width: 113.7777777777777vh;
+    height: 18vw;
+    max-height: 25.6vh;
+}
+.left-arrow-button-left-pseudomargin,
+.right-arrow-button-right-pseudomargin,
+.left-arrow-button,
+.right-arrow-button {
+    width: 9vw;
+    max-width: 12.8vh;
+    height: 9vw;
+    max-height: 12.8vh;
+}
+.left-arrow-button-left-pseudomargin,
+.left-arrow-button {
+    float: left;
+}
+.right-arrow-button-right-pseudomargin,
+.right-arrow-button {
+    float: right;
+}
+.left-arrow-button, .right-arrow-button {
+    position: relative;
+    background-color: red;
+    z-index: 1;
 }
 .image_1 {
     background-image: url("RI_retouch.JPG")
