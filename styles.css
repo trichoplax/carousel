@@ -1,0 +1,57 @@
+body {
+    text-align: center;
+}
+.pseudomargin {
+    height: 5.625vw;
+    max-height: 8vh;
+}
+.container {
+    width: 80vw;
+    max-width: 113.7777777777777vh;
+    margin: 0 auto;
+}
+.thumbnails {
+    display: inline-block;
+    margin: 0 auto;
+}
+.thumbnail {
+    display: inline-block;
+    float: left;
+    width: 20vw;
+    height: 11.25vw;
+    width: 20vw;
+    max-width: 28.44444444444444vh;
+    height: 11.25vw;
+    max-height: 16vh;
+    background-size: cover;
+    margin: 0vw;
+}
+.main {
+    display: inline-block;
+    float: left;
+    margin: 0 auto;
+    width: 80vw;
+    max-width: 113.7777777777777vh;
+    height: 45vw;
+    max-height: 64vh;
+}
+.carousel-image {
+    position: absolute;
+    background-size: cover;
+    width: 80vw;
+    max-width: 113.7777777777777vh;
+    height: 45vw;
+    max-height: 64vh;
+}
+.image_1 {
+    background-image: url("RI_retouch.JPG")
+}
+.image_2 {
+    background-image: url("folk_festival_fair_carousel_fairground_year_market-1372737.jpg")
+}
+.image_3 {
+    background-image: url("folk_festival_fair_pleasure_ferris_wheel_fairground_fun-1372841.jpg")
+}
+.image_4 {
+    background-image: url("photo-504244.jpg")
+}
