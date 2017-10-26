@@ -9,6 +9,7 @@ polygon {
     fill: white;
     stroke: black;
     stroke-width: 5;
+    opacity: 0;
 }
 .container-pseudomargin {
     height: 7.03125vw;
@@ -75,7 +76,8 @@ polygon {
 .right-arrow-button {
     float: right;
 }
-.left-arrow-button, .right-arrow-button {
+.left-arrow-button,
+.right-arrow-button {
     position: relative;
     z-index: 1;
 }
@@ -90,4 +92,11 @@ polygon {
 }
 .image_4 {
     background-image: url("photo-504244.jpg")
+}
+.main:hover polygon,
+.main:hover polygon {
+    opacity: 0.45;
+}
+.main polygon:hover {
+    opacity: 1;
 }
