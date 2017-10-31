@@ -38,6 +38,7 @@ polygon {
 .main {
     display: inline-block;
     position: relative;
+    overflow: hidden;
     float: left;
     margin: 0 auto;
     width: 80vw;
@@ -47,12 +48,28 @@ polygon {
 }
 .carousel-image {
     position: absolute;
-    top: 0px;
+    top: 0;
     background-size: cover;
     width: 80vw;
     max-width: 113.7777777777777vh;
     height: 45vw;
     max-height: 64vh;
+}
+.carousel-image.image-0 {
+    left: 0;
+    display: block;
+}
+.carousel-image.image-1 {
+    left: 0;
+    display: none;
+}
+.carousel-image.image-2 {
+    left: 0;
+    display: none;
+}
+.carousel-image.image-3 {
+    left: 0;
+    display: none;
 }
 .arrow-buttons-top-pseudomargin {
     width: 80vw;
@@ -62,40 +79,40 @@ polygon {
 }
 .left-arrow-button-left-pseudomargin,
 .right-arrow-button-right-pseudomargin,
-.left-arrow-button,
-.right-arrow-button {
+.left-arrow-button-container,
+.right-arrow-button-container {
     width: 9vw;
     max-width: 12.8vh;
     height: 9vw;
     max-height: 12.8vh;
 }
 .left-arrow-button-left-pseudomargin,
-.left-arrow-button {
+.left-arrow-button-container {
     float: left;
 }
 .right-arrow-button-right-pseudomargin,
-.right-arrow-button {
+.right-arrow-button-container {
     float: right;
 }
-.left-arrow-button,
-.right-arrow-button {
+.left-arrow-button-container,
+.right-arrow-button-container {
     position: relative;
 }
-.image_1 {
+.image-0 {
     background-image: url("RI_retouch.JPG")
 }
-.image_2 {
+.image-1 {
     background-image: url("folk_festival_fair_carousel_fairground_year_market-1372737.jpg")
 }
-.image_3 {
+.image-2 {
     background-image: url("folk_festival_fair_pleasure_ferris_wheel_fairground_fun-1372841.jpg")
 }
-.image_4 {
+.image-3 {
     background-image: url("photo-504244.jpg")
 }
 .main:hover polygon,
 .main:hover polygon {
-    opacity: 0.45;
+    opacity: 0.5;
 }
 .main polygon:hover {
     opacity: 1;
@@ -106,7 +123,7 @@ polygon {
     position: absolute;
     bottom: 0;
     color: white;
-    text-shadow: 0 0 0.1em black, 0 0 0.1em black;
+    text-shadow: 0 0 0.5em black, 0 0 0.5em black, 0 0 0.5em black, 0 0 0.5em black;
 }
 .caption a {
     color: cyan;
