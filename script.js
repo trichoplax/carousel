@@ -1,15 +1,14 @@
 var startTime   // in milliseconds since epoch
-var preferredAnimationDuration = 500    // in milliseconds
+var preferredAnimationDuration = 1000    // in milliseconds
 var targetPosition = 0  // integer indicating which image (zero indexed)
 var currentPosition = 0 // float on same scale as targetPosition
-var currentVelocity = 0 // in image widths per second
-var maxAcceleration = 2 // in image widths per second per second
-var isAnimating = false
+var currentVelocity = 0 // in image widths per frame
+var maxAcceleration = 0.01 // in image widths per frame per frame
+var timeoutId = 0
 
 document.addEventListener('DOMContentLoaded', tasksOnLoad)
 
 function tasksOnLoad() {
-    window.addEventListener('resize', tasksOnResize)
     document.getElementById('js_left-arrow-button').addEventListener('click', scrollRight)
     document.getElementById('js_right-arrow-button').addEventListener('click', scrollLeft)
     document.querySelector('.thumbnail.image-0').addEventListener('click', function(){scrollTo(0)})
@@ -18,31 +17,25 @@ function tasksOnLoad() {
     document.querySelector('.thumbnail.image-3').addEventListener('click', function(){scrollTo(3)})
 }
 
-function tasksOnResize() {
-    if (isAnimating) {
-        reposition()
-    }
-}
-
 function scrollLeft() {
+    startTime = Date.now()
     targetPosition += 1
-    if (targetPosition !== currentPosition && !isAnimating) {
-        animate()
-    }
+    clearTimeout(timeoutId)
+    animate()
 }
 
 function scrollRight() {
+    startTime = Date.now()
     targetPosition -= 1
-    if (targetPosition !== currentPosition && !isAnimating) {
-        animate()
-    }
+    clearTimeout(timeoutId)
+    animate()
 }
 
 function scrollTo(position) {
+    startTime = Date.now()
     targetPosition = position
-    if (targetPosition !== currentPosition && !isAnimating) {
-        animate()
-    }
+    clearTimeout(timeoutId)
+    animate()
 }
 
 function reposition() {
@@ -62,11 +55,9 @@ function showImage(index, offset) {
     index += 4
     index %= 4
     var selector = '.carousel-image.image-' + index
-    console.log(selector)
     var carouselImage = document.querySelector(selector)
     carouselImage.style.display = 'block'
     var vw = window.innerWidth / 100
-    console.log(vw)
     var vh = window.innerHeight / 100
     var currentWidth = Math.min(80 * vw, 113.7777777777777 * vh)
     carouselImage.style.left = (offset * currentWidth) + 'px'
@@ -74,35 +65,43 @@ function showImage(index, offset) {
 
 function animate() {
     var displacement = targetPosition - currentPosition
-    var acceleration = Math.abs(displacement) < 0.1 ? 0 : Math.sign(displacement)/1000
-    if (acceleration > maxAcceleration) {
-        acceleration = maxAcceleration
-    } else if (acceleration < -maxAcceleration) {
-        acceleration = -maxAcceleration
-    }
+    var elapsedTime = Date.now() - startTime
+    var preferredRemainingTime = preferredAnimationDuration - elapsedTime
+    var preferredRemainingFrames = preferredRemainingTime / 16
+    preferredRemainingFrames = Math.max(preferredRemainingFrames, 1)
+    var idealVelocity = 5 * displacement / preferredRemainingFrames
+    idealVelocitySize = Math.min(Math.abs(idealVelocity), Math.abs(displacement))
+    idealVelocity = idealVelocitySize * Math.sign(idealVelocity)
+    var acceleration = idealVelocity - currentVelocity
+    accelerationSize = Math.min(maxAcceleration, Math.abs(acceleration))
+    acceleration = Math.sign(acceleration) * accelerationSize
+
     currentVelocity += acceleration
-    currentVelocity *= 0.95
     currentPosition += currentVelocity
-    console.log('currentPosition: ' + currentPosition)
+
+    console.log('currentPosition: ' + currentPosition + ' currentVelocity: ' + currentVelocity)
+
     if (targetPosition < 0 && currentPosition < 0) {
         targetPosition += 4
         currentPosition += 4
     } else if (targetPosition > 3 && currentPosition > 3) {
         targetPosition -= 4
-        currentPosition -=4
+        currentPosition -= 4
     }
+
     reposition()
 
     if (!finishedAnimating()) {
-        setTimeout(animate, 16)
-        isAnimating = true
+        timeoutId = setTimeout(animate, 16)
     } else {
-        isAnimating = false
+        currentPosition = targetPosition
+        currentVelocity = 0
+        reposition()
     }
 }
 
 function finishedAnimating() {
-    if (targetPosition === currentPosition && currentVelocity === 0) {
+    if (Math.abs(currentPosition - targetPosition) < 0.001 && Math.abs(currentVelocity) < 0.001) {
         return true
     }
     return false
