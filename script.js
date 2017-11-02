@@ -3,7 +3,7 @@ var preferredAnimationDuration = 1000    // in milliseconds
 var targetPosition = 0  // integer indicating which image (zero indexed)
 var currentPosition = 0 // float on same scale as targetPosition
 var currentVelocity = 0 // in image widths per frame
-var maxAcceleration = 0.01 // in image widths per frame per frame
+var maxAcceleration = 100 // in image widths per frame per frame
 var timeoutId = 0
 
 document.addEventListener('DOMContentLoaded', tasksOnLoad)
@@ -32,10 +32,12 @@ function scrollRight() {
 }
 
 function scrollTo(position) {
-    startTime = Date.now()
-    targetPosition = position
-    clearTimeout(timeoutId)
-    animate()
+    if (targetPosition !== position) {
+        startTime = Date.now()
+        targetPosition = position
+        clearTimeout(timeoutId)
+        animate()
+    }
 }
 
 function reposition() {
@@ -67,19 +69,17 @@ function animate() {
     var displacement = targetPosition - currentPosition
     var elapsedTime = Date.now() - startTime
     var preferredRemainingTime = preferredAnimationDuration - elapsedTime
-    var preferredRemainingFrames = preferredRemainingTime / 16
-    preferredRemainingFrames = Math.max(preferredRemainingFrames, 1)
-    var idealVelocity = 5 * displacement / preferredRemainingFrames
+    var preferredRemainingFrames = Math.max(preferredRemainingTime / 16, 1)
+    var idealVelocity = displacement / preferredRemainingFrames * (preferredRemainingTime * 3 + preferredAnimationDuration) / preferredAnimationDuration
     idealVelocitySize = Math.min(Math.abs(idealVelocity), Math.abs(displacement))
     idealVelocity = idealVelocitySize * Math.sign(idealVelocity)
-    var acceleration = idealVelocity - currentVelocity
-    accelerationSize = Math.min(maxAcceleration, Math.abs(acceleration))
-    acceleration = Math.sign(acceleration) * accelerationSize
-
+    var acceleration = (idealVelocity - currentVelocity)
+    if (Math.sign(acceleration) === Math.sign(currentVelocity)) {
+        accelerationSize = Math.min(maxAcceleration, Math.abs(acceleration))
+        acceleration = Math.sign(acceleration) * accelerationSize
+    }
     currentVelocity += acceleration
     currentPosition += currentVelocity
-
-    console.log('currentPosition: ' + currentPosition + ' currentVelocity: ' + currentVelocity)
 
     if (targetPosition < 0 && currentPosition < 0) {
         targetPosition += 4

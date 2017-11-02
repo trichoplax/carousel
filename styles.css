@@ -99,16 +99,16 @@ polygon {
     position: relative;
 }
 .image-0 {
-    background-image: url("RI_retouch.JPG")
-}
-.image-1 {
     background-image: url("folk_festival_fair_carousel_fairground_year_market-1372737.jpg")
 }
+.image-1 {
+    background-image: url("Manually_powered_carousel_on_a_playground_in_Saint-Petersburg.JPG")
+}
 .image-2 {
-    background-image: url("folk_festival_fair_pleasure_ferris_wheel_fairground_fun-1372841.jpg")
+    background-image: url("Carousel_at_Hyde_Park.jpg")
 }
 .image-3 {
-    background-image: url("photo-504244.jpg")
+    background-image: url("Cyclecide-carousel-Bumbershoot07.jpg")
 }
 .main:hover polygon,
 .main:hover polygon {
